@@ -1,0 +1,1317 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kappa® Official Store | Sportswear, Streetwear & 222 Banda</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        kappaRed: '#E2001A',
+                        kappaDarkRed: '#B80015',
+                        kappaBlack: '#0B0B0B',
+                        kappaCharcoal: '#18181B',
+                        kappaGray: '#F4F4F6'
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['"Oswald"', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #18181b;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #3f3f46;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #E2001A;
+        }
+
+        .product-card:hover .product-img-secondary {
+            opacity: 1;
+        }
+        
+        .product-card:hover .quick-add-btn {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        /* Repeating Kappa Omini Tape Background pattern for Authentic feel */
+        .kappa-tape-bg {
+            background-color: #0b0b0b;
+            background-image: radial-gradient(#222 1px, transparent 0);
+            background-size: 16px 16px;
+        }
+
+        @keyframes marquee {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: 200%;
+            animation: marquee 25s linear infinite;
+        }
+
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+    </style>
+</head>
+<body class="bg-white text-kappaBlack font-sans antialiased selection:bg-kappaRed selection:text-white min-h-screen flex flex-col justify-between overflow-x-hidden">
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <div class="bg-kappaBlack text-white text-xs py-2 px-4 font-medium flex justify-between items-center tracking-wider border-b border-neutral-800 relative z-50">
+        <div class="hidden sm:flex items-center gap-4 text-neutral-400">
+            <div class="flex items-center gap-1 cursor-pointer hover:text-white transition-colors" id="currency-selector">
+                <i class="fa-solid fa-globe text-kappaRed"></i>
+                <span id="current-currency">USD ($)</span>
+                <i class="fa-solid fa-chevron-down text-[10px] ml-1"></i>
+            </div>
+            <span><i class="fa-solid fa-truck-fast text-kappaRed mr-1"></i> FREE EXPRESS SHIPPING OVER $150</span>
+        </div>
+
+        <!-- Marquee Text Announcement -->
+        <div class="overflow-hidden whitespace-nowrap mx-auto sm:mx-0 max-w-xs md:max-w-md font-semibold text-neutral-200 uppercase tracking-widest text-[11px]">
+            <div class="flex gap-8 items-center">
+                <span class="inline-flex items-center gap-2"><span class="w-2 h-2 rounded-full bg-kappaRed animate-ping"></span> NEW COLLECTION: KAPPA BANDA 2026 DROPPED</span>
+                <span class="text-neutral-500">|</span>
+                <span class="text-kappaRed font-bold">USE CODE "KAPPA20" FOR 20% OFF</span>
+            </div>
+        </div>
+
+        <div class="hidden md:flex items-center gap-4 text-neutral-400">
+            <a href="#store-finder" class="hover:text-kappaRed transition-colors"><i class="fa-solid fa-location-dot mr-1"></i> Stores</a>
+            <a href="#help" class="hover:text-kappaRed transition-colors"><i class="fa-regular fa-circle-question mr-1"></i> Support</a>
+        </div>
+    </div>
+
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-neutral-200 transition-all duration-300" id="main-header">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                
+                <!-- Mobile Hamburger + Desktop Main Nav -->
+                <div class="flex items-center gap-6">
+                    <button id="mobile-menu-btn" class="lg:hidden text-2xl text-kappaBlack focus:outline-none p-1 hover:text-kappaRed transition-colors" aria-label="Open Menu">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <nav class="hidden lg:flex items-center gap-8 font-display text-lg tracking-wider font-semibold">
+                        <a href="#catalog" onclick="filterProducts('all')" class="hover:text-kappaRed transition-colors relative group py-2">
+                            NEW ARRIVALS
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kappaRed transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#catalog" onclick="filterProducts('men')" class="hover:text-kappaRed transition-colors relative group py-2">
+                            MEN
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kappaRed transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#catalog" onclick="filterProducts('women')" class="hover:text-kappaRed transition-colors relative group py-2">
+                            WOMEN
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kappaRed transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#catalog" onclick="filterProducts('222banda')" class="text-kappaRed font-bold hover:opacity-80 transition-opacity relative group py-2">
+                            222 BANDA
+                            <span class="absolute bottom-0 left-0 w-full h-0.5 bg-kappaRed"></span>
+                        </a>
+                        <a href="#catalog" onclick="filterProducts('football')" class="hover:text-kappaRed transition-colors relative group py-2">
+                            FOOTBALL & SPORT
+                            <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-kappaRed transition-all duration-300 group-hover:w-full"></span>
+                        </a>
+                        <a href="#catalog" onclick="filterProducts('sale')" class="text-neutral-500 hover:text-kappaRed transition-colors relative group py-2">
+                            SALE <span class="text-[10px] bg-red-100 text-kappaRed px-1.5 py-0.5 rounded ml-1 uppercase font-bold">-20%</span>
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Brand Logo Center -->
+                <a href="#" class="flex items-center gap-2 group transform hover:scale-105 transition-transform duration-300">
+                    <!-- Kappa Omini Silhouette SVG -->
+                    <svg class="h-10 w-auto fill-kappaRed transition-colors duration-300" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 12 C45.5 12 42 15.5 42 20 C42 24.5 45.5 28 50 28 C54.5 28 58 24.5 58 20 C58 15.5 54.5 12 50 12 Z M35 34 C28 34 22 40 22 50 C22 62 25 76 30 76 L38 76 L38 58 C38 55 42 55 45 55 L45 88 L55 88 L55 55 C58 55 62 55 62 58 L62 76 L70 76 C75 76 78 62 78 50 C78 40 72 34 65 34 L35 34 Z"/>
+                    </svg>
+                    <span class="font-display font-bold text-3xl tracking-tighter uppercase text-kappaBlack group-hover:text-kappaRed transition-colors">KAPPA</span>
+                </a>
+
+                <!-- Right Utility Icons -->
+                <div class="flex items-center gap-5">
+                    <button id="open-search-btn" class="p-2 text-xl hover:text-kappaRed transition-colors" title="Search Products">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                    
+                    <button id="open-wishlist-btn" class="p-2 text-xl hover:text-kappaRed transition-colors relative" title="Saved Items">
+                        <i class="fa-regular fa-heart"></i>
+                        <span id="wishlist-badge" class="hidden absolute top-1 right-0 bg-kappaRed text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center">0</span>
+                    </button>
+
+                    <button id="open-cart-btn" class="p-2 text-xl hover:text-kappaRed transition-colors relative bg-neutral-100 rounded-full w-10 h-10 flex items-center justify-center hover:bg-kappaRed hover:text-white transition-all shadow-sm" title="Shopping Bag">
+                        <i class="fa-solid fa-bag-shopping text-sm"></i>
+                        <span id="cart-badge" class="absolute -top-1 -right-1 bg-kappaRed text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white">0</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu" class="fixed inset-0 bg-black/60 z-50 opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden">
+        <div class="bg-white w-4/5 max-w-sm h-full shadow-2xl p-6 flex flex-col justify-between transform -translate-x-full transition-transform duration-300 ease-out" id="mobile-menu-content">
+            <div>
+                <div class="flex items-center justify-between pb-6 border-b border-neutral-200">
+                    <div class="flex items-center gap-2">
+                        <svg class="h-8 w-auto fill-kappaRed" viewBox="0 0 100 100"><path d="M50 12 C45.5 12 42 15.5 42 20 C42 24.5 45.5 28 50 28 C54.5 28 58 24.5 58 20 C58 15.5 54.5 12 50 12 Z M35 34 C28 34 22 40 22 50 C22 62 25 76 30 76 L38 76 L38 58 C38 55 42 55 45 55 L45 88 L55 88 L55 55 C58 55 62 55 62 58 L62 76 L70 76 C75 76 78 62 78 50 C78 40 72 34 65 34 L35 34 Z"/></svg>
+                        <span class="font-display font-bold text-2xl tracking-tight">KAPPA</span>
+                    </div>
+                    <button id="close-mobile-menu" class="p-2 text-2xl hover:text-kappaRed transition-colors">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <nav class="flex flex-col gap-5 py-6 font-display text-xl tracking-wide font-semibold">
+                    <a href="#catalog" onclick="closeMobileMenu(); filterProducts('all');" class="hover:text-kappaRed">NEW ARRIVALS</a>
+                    <a href="#catalog" onclick="closeMobileMenu(); filterProducts('men');" class="hover:text-kappaRed">MEN</a>
+                    <a href="#catalog" onclick="closeMobileMenu(); filterProducts('women');" class="hover:text-kappaRed">WOMEN</a>
+                    <a href="#catalog" onclick="closeMobileMenu(); filterProducts('222banda');" class="text-kappaRed">222 BANDA COLLECTION</a>
+                    <a href="#catalog" onclick="closeMobileMenu(); filterProducts('football');" class="hover:text-kappaRed">FOOTBALL & TEAMS</a>
+                    <a href="#catalog" onclick="closeMobileMenu(); filterProducts('sale');" class="text-neutral-500 hover:text-kappaRed">SALE (-20%)</a>
+                </nav>
+            </div>
+            <div class="border-t border-neutral-200 pt-6">
+                <p class="text-xs text-neutral-500 uppercase tracking-widest mb-3 font-bold">KAPPA CLUB MEMBER</p>
+                <div class="grid grid-cols-2 gap-3">
+                    <button onclick="showToast('Account login demo feature ready.')" class="bg-kappaBlack text-white py-2.5 rounded-lg text-xs font-bold uppercase hover:bg-neutral-800 transition-colors">Sign In</button>
+                    <button onclick="showToast('Member registration ready.')" class="bg-neutral-100 text-kappaBlack py-2.5 rounded-lg text-xs font-bold uppercase hover:bg-neutral-200 transition-colors">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="search-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-start justify-center pt-20 px-4">
+        <div class="bg-white w-full max-w-3xl rounded-2xl p-6 shadow-2xl transform -translate-y-10 transition-transform duration-300" id="search-modal-content">
+            <div class="flex items-center justify-between border-b-2 border-kappaBlack pb-3">
+                <i class="fa-solid fa-magnifying-glass text-xl text-neutral-400 mr-3"></i>
+                <input type="text" id="search-input" placeholder="Search Tracksuits, Hoodies, Football Jerseys, Shoes..." class="w-full text-lg font-medium focus:outline-none placeholder-neutral-400">
+                <button id="close-search-btn" class="text-neutral-400 hover:text-kappaBlack text-xl p-2">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="mt-4">
+                <p class="text-xs font-bold text-neutral-400 uppercase tracking-wider mb-2">Popular Searches</p>
+                <div class="flex flex-wrap gap-2 mb-4">
+                    <button onclick="quickSearch('222 Banda')" class="px-3 py-1 bg-neutral-100 hover:bg-kappaRed hover:text-white text-xs rounded-full font-medium transition-colors">222 Banda</button>
+                    <button onclick="quickSearch('Tracksuit')" class="px-3 py-1 bg-neutral-100 hover:bg-kappaRed hover:text-white text-xs rounded-full font-medium transition-colors">Tracksuit</button>
+                    <button onclick="quickSearch('Genoa')" class="px-3 py-1 bg-neutral-100 hover:bg-kappaRed hover:text-white text-xs rounded-full font-medium transition-colors">Genoa Kit</button>
+                    <button onclick="quickSearch('Fiorentina')" class="px-3 py-1 bg-neutral-100 hover:bg-kappaRed hover:text-white text-xs rounded-full font-medium transition-colors">Fiorentina</button>
+                    <button onclick="quickSearch('Hoodie')" class="px-3 py-1 bg-neutral-100 hover:bg-kappaRed hover:text-white text-xs rounded-full font-medium transition-colors">Hoodies</button>
+                </div>
+            </div>
+            <div id="search-results" class="max-h-80 overflow-y-auto custom-scrollbar flex flex-col gap-2 divide-y">
+                <!-- Search results injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <section class="relative bg-kappaBlack text-white overflow-hidden">
+        <div class="relative h-[80vh] min-h-[500px] max-h-[700px] flex items-center">
+            <!-- Background Image with Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?q=80&w=1600&auto=format&fit=crop" alt="Kappa Authentic Hero" class="w-full h-full object-cover object-center opacity-60">
+                <div class="absolute inset-0 bg-gradient-to-r from-kappaBlack via-kappaBlack/70 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full py-12">
+                <div class="max-w-xl space-y-6">
+                    <span class="inline-block bg-kappaRed text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-sm">
+                        AUTHENTIC SINCE 1967
+                    </span>
+                    <h1 class="font-display text-5xl sm:text-7xl font-bold tracking-tight uppercase leading-none">
+                        TIMELESS <br><span class="text-kappaRed">IN MOTION.</span>
+                    </h1>
+                    <p class="text-neutral-300 text-base sm:text-lg font-normal max-w-md">
+                        Discover the new 2026 Collection featuring iconic 222 Banda taped tracksuits, high-performance team jerseys, and heritage streetwear.
+                    </p>
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="#catalog" onclick="filterProducts('222banda')" class="bg-kappaRed hover:bg-kappaDarkRed text-white font-display text-lg tracking-wider font-bold px-8 py-3.5 rounded-lg shadow-lg hover:shadow-red-600/30 transition-all duration-300 transform hover:-translate-y-0.5">
+                            SHOP 222 BANDA
+                        </a>
+                        <a href="#catalog" onclick="filterProducts('football')" class="bg-white/10 backdrop-blur-md border border-white/30 hover:bg-white hover:text-kappaBlack text-white font-display text-lg tracking-wider font-bold px-8 py-3.5 rounded-lg transition-all duration-300">
+                            FOOTBALL KITS
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Side Floating Badge -->
+            <div class="absolute right-8 bottom-12 hidden lg:flex items-center gap-3 bg-neutral-900/90 border border-neutral-700 p-4 rounded-xl backdrop-blur-md shadow-2xl max-w-xs">
+                <img src="https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=200&auto=format&fit=crop" class="w-16 h-16 rounded-lg object-cover" alt="Featured Tracksuit">
+                <div>
+                    <span class="text-[10px] text-kappaRed font-bold uppercase tracking-widest">SPOTLIGHT ITEM</span>
+                    <h4 class="font-display text-sm font-bold uppercase text-white">222 BANDA ANNISTON JACKET</h4>
+                    <p class="text-xs text-neutral-400 font-semibold">$90.00 USD</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-neutral-50 border-b border-neutral-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10">
+                <div>
+                    <span class="text-kappaRed font-bold text-xs uppercase tracking-widest">EXPLORE THE WORLDS</span>
+                    <h2 class="font-display text-4xl font-bold uppercase tracking-tight text-kappaBlack mt-1">FEATURED CATEGORIES</h2>
+                </div>
+                <a href="#catalog" class="mt-4 md:mt-0 font-display font-semibold text-kappaRed hover:text-kappaDarkRed flex items-center gap-2 group">
+                    VIEW ALL COLLECTIONS <i class="fa-solid fa-arrow-right text-xs group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category Card 1 -->
+                <div onclick="filterProducts('222banda')" class="group relative h-96 rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:-translate-y-1 transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800&auto=format&fit=crop" alt="222 Banda Taped Tracksuits" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kappaBlack via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 text-white">
+                        <span class="bg-kappaRed text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">HERITAGE</span>
+                        <h3 class="font-display text-2xl font-bold uppercase mt-1">222 BANDA TRACKSUITS</h3>
+                        <p class="text-xs text-neutral-300 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">The iconic repetitive logo tape silhouette.</p>
+                    </div>
+                </div>
+
+                <!-- Category Card 2 -->
+                <div onclick="filterProducts('football')" class="group relative h-96 rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:-translate-y-1 transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop" alt="Football Club Kits" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kappaBlack via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 text-white">
+                        <span class="bg-blue-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">OFFICIAL TEAMS</span>
+                        <h3 class="font-display text-2xl font-bold uppercase mt-1">FOOTBALL JERSEYS</h3>
+                        <p class="text-xs text-neutral-300 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Genoa, Fiorentina & Red Star Kits.</p>
+                    </div>
+                </div>
+
+                <!-- Category Card 3 -->
+                <div onclick="filterProducts('men')" class="group relative h-96 rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:-translate-y-1 transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1529374255404-311a2a4f1fd9?q=80&w=800&auto=format&fit=crop" alt="Men's Streetwear" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kappaBlack via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 text-white">
+                        <span class="bg-neutral-800 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">LIFESTYLE</span>
+                        <h3 class="font-display text-2xl font-bold uppercase mt-1">MEN'S STREETWEAR</h3>
+                        <p class="text-xs text-neutral-300 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Hoodies, jackets & cargo trousers.</p>
+                    </div>
+                </div>
+
+                <!-- Category Card 4 -->
+                <div onclick="filterProducts('women')" class="group relative h-96 rounded-2xl overflow-hidden shadow-lg cursor-pointer transform hover:-translate-y-1 transition-all duration-300">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=800&auto=format&fit=crop" alt="Women's Athleisure" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-kappaBlack via-black/30 to-transparent"></div>
+                    <div class="absolute bottom-6 left-6 right-6 text-white">
+                        <span class="bg-pink-600 text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">ATHLEISURE</span>
+                        <h3 class="font-display text-2xl font-bold uppercase mt-1">WOMEN'S COLLECTION</h3>
+                        <p class="text-xs text-neutral-300 mt-1 opacity-0 group-hover:opacity-100 transition-opacity">Cropped fleece, tights & sneakers.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="catalog" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        
+        <!-- Filter Controls Bar -->
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-neutral-200 pb-6 mb-8">
+            <div>
+                <span class="text-kappaRed font-bold text-xs uppercase tracking-widest">KAPPA 2026 DROPS</span>
+                <h2 class="font-display text-4xl font-bold uppercase tracking-tight text-kappaBlack">CATALOGUE</h2>
+            </div>
+
+            <!-- Filter Category Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto custom-scrollbar pb-2 md:pb-0">
+                <button onclick="filterProducts('all')" id="filter-all" class="filter-tab-btn active px-4 py-2 rounded-full font-display text-sm uppercase tracking-wider font-bold transition-all bg-kappaBlack text-white">
+                    ALL PRODUCTS
+                </button>
+                <button onclick="filterProducts('222banda')" id="filter-222banda" class="filter-tab-btn px-4 py-2 rounded-full font-display text-sm uppercase tracking-wider font-bold transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">
+                    222 BANDA
+                </button>
+                <button onclick="filterProducts('football')" id="filter-football" class="filter-tab-btn px-4 py-2 rounded-full font-display text-sm uppercase tracking-wider font-bold transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">
+                    FOOTBALL
+                </button>
+                <button onclick="filterProducts('men')" id="filter-men" class="filter-tab-btn px-4 py-2 rounded-full font-display text-sm uppercase tracking-wider font-bold transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">
+                    MEN
+                </button>
+                <button onclick="filterProducts('women')" id="filter-women" class="filter-tab-btn px-4 py-2 rounded-full font-display text-sm uppercase tracking-wider font-bold transition-all bg-neutral-100 text-neutral-700 hover:bg-neutral-200">
+                    WOMEN
+                </button>
+                <button onclick="filterProducts('sale')" id="filter-sale" class="filter-tab-btn px-4 py-2 rounded-full font-display text-sm uppercase tracking-wider font-bold transition-all bg-red-50 text-kappaRed border border-red-200 hover:bg-red-100">
+                    SALE (-20%)
+                </button>
+            </div>
+
+            <!-- Sort By Select -->
+            <div class="flex items-center gap-3 self-end md:self-auto">
+                <span class="text-xs font-semibold text-neutral-500 uppercase">Sort by:</span>
+                <select id="sort-select" onchange="sortProducts(this.value)" class="bg-neutral-100 border border-neutral-300 rounded-lg px-3 py-1.5 text-xs font-bold focus:outline-none focus:ring-2 focus:ring-kappaRed">
+                    <option value="featured">Featured Drops</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Product Grid Container -->
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+            <!-- Dynamic Product Cards will be rendered here by JavaScript -->
+        </div>
+    </section>
+
+    <section class="kappa-tape-bg text-white py-20 border-y border-neutral-800 my-10 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <div class="inline-flex items-center gap-2 bg-kappaRed text-white text-xs font-bold px-3 py-1 rounded">
+                        <i class="fa-solid fa-fire"></i> HERITAGE STORY
+                    </div>
+                    <h2 class="font-display text-5xl sm:text-6xl font-bold uppercase tracking-tight leading-none">
+                        THE LEGENDARY <br><span class="text-kappaRed">222 BANDA TAPE.</span>
+                    </h2>
+                    <p class="text-neutral-400 text-base leading-relaxed">
+                        Born in 1967 in Turin, Italy, Kappa revolutionized sportswear by introducing the world's first repeating logo tape along tracksuits. The iconic Omini silhouette — representing equality between men and women back-to-back — remains a worldwide staple of street culture.
+                    </p>
+                    <div class="grid grid-cols-3 gap-6 pt-4 border-t border-neutral-800">
+                        <div>
+                            <span class="font-display text-3xl font-bold text-kappaRed">1967</span>
+                            <p class="text-xs text-neutral-400 uppercase mt-1">Established in Turin</p>
+                        </div>
+                        <div>
+                            <span class="font-display text-3xl font-bold text-white">100+</span>
+                            <p class="text-xs text-neutral-400 uppercase mt-1">Pro Clubs Sponsored</p>
+                        </div>
+                        <div>
+                            <span class="font-display text-3xl font-bold text-white">100%</span>
+                            <p class="text-xs text-neutral-400 uppercase mt-1">Authentic Style</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-neutral-800">
+                        <img src="https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800&auto=format&fit=crop" alt="Kappa 222 Banda Heritage" class="w-full h-auto object-cover">
+                        <div class="absolute bottom-4 left-4 right-4 bg-black/80 backdrop-blur-md p-4 rounded-xl border border-neutral-700 flex items-center justify-between">
+                            <div>
+                                <h4 class="font-display font-bold text-sm uppercase">222 BANDA MITEL 1 HOODIE</h4>
+                                <p class="text-xs text-neutral-400">Authentic Heavy Cotton Fleece</p>
+                            </div>
+                            <button onclick="openQuickView(1)" class="bg-kappaRed text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-kappaDarkRed transition-colors">
+                                QUICK VIEW
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-kappaRed font-bold text-xs uppercase tracking-widest">OFFICIAL TECHNICAL SPONSOR</span>
+                <h2 class="font-display text-4xl font-bold uppercase tracking-tight text-kappaBlack mt-1">FOOTBALL CLUBS & TEAMS</h2>
+                <p class="text-neutral-500 text-sm mt-2">Official match kits, Kombat™ Pro technology active jerseys, and team wear.</p>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Club 1 -->
+                <div onclick="filterProducts('football')" class="bg-kappaGray hover:bg-neutral-900 hover:text-white p-6 rounded-2xl text-center transition-all duration-300 cursor-pointer group border border-neutral-200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield-halved text-2xl text-red-600"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold uppercase">GENOA C.F.C.</h3>
+                    <p class="text-xs text-neutral-500 group-hover:text-neutral-400 mt-1">Official Serie A Kits</p>
+                </div>
+
+                <!-- Club 2 -->
+                <div onclick="filterProducts('football')" class="bg-kappaGray hover:bg-neutral-900 hover:text-white p-6 rounded-2xl text-center transition-all duration-300 cursor-pointer group border border-neutral-200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-shield text-2xl text-purple-700"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold uppercase">ACF FIORENTINA</h3>
+                    <p class="text-xs text-neutral-500 group-hover:text-neutral-400 mt-1">Kombat™ Pro Series</p>
+                </div>
+
+                <!-- Club 3 -->
+                <div onclick="filterProducts('football')" class="bg-kappaGray hover:bg-neutral-900 hover:text-white p-6 rounded-2xl text-center transition-all duration-300 cursor-pointer group border border-neutral-200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-star text-2xl text-kappaRed"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold uppercase">RED STAR FC</h3>
+                    <p class="text-xs text-neutral-500 group-hover:text-neutral-400 mt-1">Parisian Culture Kits</p>
+                </div>
+
+                <!-- Club 4 -->
+                <div onclick="filterProducts('football')" class="bg-kappaGray hover:bg-neutral-900 hover:text-white p-6 rounded-2xl text-center transition-all duration-300 cursor-pointer group border border-neutral-200">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-white rounded-full flex items-center justify-center shadow-md group-hover:scale-110 transition-transform">
+                        <i class="fa-solid fa-trophy text-2xl text-yellow-500"></i>
+                    </div>
+                    <h3 class="font-display text-xl font-bold uppercase">KAIZER CHIEFS</h3>
+                    <p class="text-xs text-neutral-500 group-hover:text-neutral-400 mt-1">Heritage Collection</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="quickview-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-3xl w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 relative" id="quickview-content">
+            <button onclick="closeQuickView()" class="absolute top-4 right-4 z-20 bg-neutral-100 hover:bg-kappaRed hover:text-white w-10 h-10 rounded-full flex items-center justify-center transition-colors">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+
+            <div id="quickview-body" class="grid grid-cols-1 md:grid-cols-2">
+                <!-- Modal Details dynamic via JS -->
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-drawer" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out" id="cart-drawer-content">
+                
+                <!-- Drawer Header -->
+                <div class="p-6 border-b border-neutral-200 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-solid fa-bag-shopping text-xl text-kappaRed"></i>
+                        <h3 class="font-display text-2xl font-bold uppercase tracking-tight">YOUR BAG</h3>
+                        <span id="cart-count-badge" class="bg-neutral-100 text-neutral-800 text-xs font-bold px-2.5 py-1 rounded-full">0 items</span>
+                    </div>
+                    <button id="close-cart-btn" class="p-2 text-xl text-neutral-500 hover:text-kappaRed transition-colors">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <!-- Free Shipping Progress Bar -->
+                <div class="bg-neutral-900 text-white p-4">
+                    <div class="flex justify-between text-xs font-bold uppercase mb-1.5">
+                        <span id="shipping-progress-text">Free Shipping Progress</span>
+                        <span id="shipping-remaining-text">$150.00 left</span>
+                    </div>
+                    <div class="w-full bg-neutral-700 h-2 rounded-full overflow-hidden">
+                        <div id="shipping-progress-bar" class="bg-kappaRed h-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Cart Items List -->
+                <div id="cart-items-container" class="p-6 flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-4 divide-y divide-neutral-100">
+                    <!-- Dynamic Cart Items injected here -->
+                </div>
+
+                <!-- Cart Footer / Subtotal & Checkout -->
+                <div class="p-6 border-t border-neutral-200 bg-neutral-50 space-y-4">
+                    <!-- Coupon Code Input -->
+                    <div class="flex gap-2">
+                        <input type="text" id="promo-code-input" placeholder="Promo code (e.g. KAPPA20)" class="w-full px-3 py-2 text-xs font-medium border border-neutral-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-kappaRed uppercase">
+                        <button onclick="applyPromoCode()" class="bg-kappaBlack text-white text-xs font-bold px-4 py-2 rounded-lg hover:bg-neutral-800 transition-colors uppercase">
+                            Apply
+                        </button>
+                    </div>
+
+                    <!-- Discount Line -->
+                    <div id="discount-row" class="hidden flex justify-between text-xs font-semibold text-green-600">
+                        <span>DISCOUNT (20% OFF):</span>
+                        <span id="discount-amount">-$0.00</span>
+                    </div>
+
+                    <!-- Subtotal Line -->
+                    <div class="flex justify-between items-baseline font-display">
+                        <span class="text-sm font-bold uppercase text-neutral-500">SUBTOTAL</span>
+                        <span id="cart-subtotal" class="text-3xl font-bold text-kappaBlack">$0.00</span>
+                    </div>
+
+                    <p class="text-[11px] text-neutral-400 text-center">Taxes and express international shipping calculated at checkout.</p>
+
+                    <button onclick="simulateCheckout()" class="w-full bg-kappaRed hover:bg-kappaDarkRed text-white py-4 rounded-xl font-display text-lg font-bold tracking-wider uppercase transition-all shadow-lg hover:shadow-red-600/30 flex items-center justify-center gap-2">
+                        <span>PROCEED TO CHECKOUT</span>
+                        <i class="fa-solid fa-lock text-sm"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="wishlist-drawer" class="fixed inset-0 bg-black/60 backdrop-blur-xs z-50 opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="w-screen max-w-md bg-white shadow-2xl flex flex-col justify-between transform translate-x-full transition-transform duration-300 ease-in-out" id="wishlist-drawer-content">
+                
+                <div class="p-6 border-b border-neutral-200 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <i class="fa-regular fa-heart text-xl text-kappaRed"></i>
+                        <h3 class="font-display text-2xl font-bold uppercase tracking-tight">SAVED ITEMS</h3>
+                    </div>
+                    <button id="close-wishlist-btn" class="p-2 text-xl text-neutral-500 hover:text-kappaRed transition-colors">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+
+                <div id="wishlist-items-container" class="p-6 flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-4">
+                    <!-- Wishlist items injected JS -->
+                </div>
+
+                <div class="p-6 border-t border-neutral-200 bg-neutral-50">
+                    <button onclick="closeWishlistDrawer()" class="w-full bg-kappaBlack text-white py-3 rounded-xl font-display text-sm font-bold uppercase hover:bg-neutral-800 transition-colors">
+                        CONTINUE SHOPPING
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-kappaBlack text-white border-t border-neutral-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10">
+                
+                <!-- Brand Info Column -->
+                <div class="lg:col-span-2 space-y-4">
+                    <div class="flex items-center gap-2">
+                        <svg class="h-9 w-auto fill-kappaRed" viewBox="0 0 100 100"><path d="M50 12 C45.5 12 42 15.5 42 20 C42 24.5 45.5 28 50 28 C54.5 28 58 24.5 58 20 C58 15.5 54.5 12 50 12 Z M35 34 C28 34 22 40 22 50 C22 62 25 76 30 76 L38 76 L38 58 C38 55 42 55 45 55 L45 88 L55 88 L55 55 C58 55 62 55 62 58 L62 76 L70 76 C75 76 78 62 78 50 C78 40 72 34 65 34 L35 34 Z"/></svg>
+                        <span class="font-display font-bold text-3xl tracking-tight">KAPPA</span>
+                    </div>
+                    <p class="text-neutral-400 text-sm max-w-sm">
+                        Authentic Italian sportswear since 1967. Famous for pioneering taped tracksuits, Kombat™ football jerseys, and timeless street culture style.
+                    </p>
+                    
+                    <!-- Newsletter Form -->
+                    <div class="pt-2">
+                        <p class="text-xs font-bold uppercase tracking-wider text-neutral-300 mb-2">JOIN THE KAPPA CLUB (-15% OFF FIRST ORDER)</p>
+                        <form onsubmit="subscribeNewsletter(event)" class="flex gap-2 max-w-md">
+                            <input type="email" required placeholder="Enter your email address" class="bg-neutral-900 border border-neutral-700 rounded-lg px-4 py-2.5 text-xs text-white focus:outline-none focus:border-kappaRed w-full">
+                            <button type="submit" class="bg-kappaRed hover:bg-kappaDarkRed text-white font-display text-sm font-bold uppercase px-5 py-2.5 rounded-lg transition-colors">
+                                JOIN
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Links Column 1 -->
+                <div>
+                    <h4 class="font-display text-lg font-bold uppercase tracking-wider mb-4 text-white">COLLECTIONS</h4>
+                    <ul class="space-y-2.5 text-xs text-neutral-400">
+                        <li><a href="#catalog" onclick="filterProducts('222banda')" class="hover:text-kappaRed transition-colors">222 Banda Heritage</a></li>
+                        <li><a href="#catalog" onclick="filterProducts('football')" class="hover:text-kappaRed transition-colors">Football Kits 2026</a></li>
+                        <li><a href="#catalog" onclick="filterProducts('men')" class="hover:text-kappaRed transition-colors">Men's Tracksuits</a></li>
+                        <li><a href="#catalog" onclick="filterProducts('women')" class="hover:text-kappaRed transition-colors">Women's Athleisure</a></li>
+                        <li><a href="#catalog" onclick="filterProducts('sale')" class="hover:text-kappaRed transition-colors">Outlet & Sale</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links Column 2 -->
+                <div>
+                    <h4 class="font-display text-lg font-bold uppercase tracking-wider mb-4 text-white">CUSTOMER HELP</h4>
+                    <ul class="space-y-2.5 text-xs text-neutral-400">
+                        <li><a href="#" onclick="showToast('Track your order page ready.')" class="hover:text-kappaRed transition-colors">Track Order</a></li>
+                        <li><a href="#" onclick="showToast('Free Express Shipping over $150.')" class="hover:text-kappaRed transition-colors">Shipping & Delivery</a></li>
+                        <li><a href="#" onclick="showToast('30-Day Free Returns policy.')" class="hover:text-kappaRed transition-colors">Returns & Refunds</a></li>
+                        <li><a href="#" onclick="showToast('Size Guide active.')" class="hover:text-kappaRed transition-colors">Official Size Guide</a></li>
+                        <li><a href="#" onclick="showToast('Support team online.')" class="hover:text-kappaRed transition-colors">Contact Support</a></li>
+                    </ul>
+                </div>
+
+                <!-- Links Column 3 -->
+                <div>
+                    <h4 class="font-display text-lg font-bold uppercase tracking-wider mb-4 text-white">CONNECT WITH US</h4>
+                    <div class="flex gap-3 mb-6">
+                        <a href="#" class="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:bg-kappaRed transition-colors"><i class="fa-brands fa-instagram text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:bg-kappaRed transition-colors"><i class="fa-brands fa-tiktok text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:bg-kappaRed transition-colors"><i class="fa-brands fa-facebook-f text-sm"></i></a>
+                        <a href="#" class="w-9 h-9 rounded-full bg-neutral-900 border border-neutral-800 flex items-center justify-center hover:bg-kappaRed transition-colors"><i class="fa-brands fa-x-twitter text-sm"></i></a>
+                    </div>
+                    <p class="text-xs text-neutral-500 font-medium">BASICNET GROUP © 2026</p>
+                    <p class="text-[11px] text-neutral-600 mt-1">Kappa® is a registered trademark of BasicNet S.p.A.</p>
+                </div>
+
+            </div>
+
+            <!-- Bottom Sub-Footer -->
+            <div class="border-t border-neutral-800 mt-12 pt-8 flex flex-col md:flex-row items-center justify-between text-xs text-neutral-500 gap-4">
+                <p>© 2026 Kappa® Official Replica Store. All Rights Reserved.</p>
+                <div class="flex items-center gap-4 text-lg text-neutral-400">
+                    <i class="fa-brands fa-cc-visa" title="Visa"></i>
+                    <i class="fa-brands fa-cc-mastercard" title="Mastercard"></i>
+                    <i class="fa-brands fa-cc-apple-pay" title="Apple Pay"></i>
+                    <i class="fa-brands fa-cc-paypal" title="PayPal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Official Product Dataset
+        const products = [
+            {
+                id: 1,
+                name: "222 BANDA ANNISTON TRACK JACKET",
+                category: "222banda",
+                gender: "men",
+                price: 90.00,
+                originalPrice: 110.00,
+                isNew: true,
+                badge: "BESTSELLER",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1556906781-9a412961c28c?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1578587018452-892bacefd3f2?q=80&w=600&auto=format&fit=crop",
+                description: "The timeless 222 Banda Anniston Track Jacket in soft brushed tricot fabric with iconic repeating Omini tape along sleeves.",
+                colors: ["#000000", "#E2001A", "#1E3A8A"]
+            },
+            {
+                id: 2,
+                name: "222 BANDA ASTORIAZZ PANTS",
+                category: "222banda",
+                gender: "men",
+                price: 85.00,
+                originalPrice: 85.00,
+                isNew: true,
+                badge: "ICONIC",
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1517445312882-bc9910d016b7?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1506629082955-511b1aa562c8?q=80&w=600&auto=format&fit=crop",
+                description: "Straight-leg track trousers with side pockets, elasticated waistband with drawstring, and signature Banda tape down both legs.",
+                colors: ["#000000", "#4B5563"]
+            },
+            {
+                id: 3,
+                name: "KOMBAT PRO 2026 GENOA THIRD KIT",
+                category: "football",
+                gender: "men",
+                price: 120.00,
+                originalPrice: 120.00,
+                isNew: true,
+                badge: "MATCH JERSEY",
+                rating: 5.0,
+                image: "https://images.unsplash.com/photo-1518609878373-06d740f60d8b?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=600&auto=format&fit=crop",
+                description: "Official Genoa CFC Third Active Jersey featuring Kombat™ stretch technology, breathable jacquard fabric and embroidered crest.",
+                colors: ["#1E3A8A", "#E2001A"]
+            },
+            {
+                id: 4,
+                name: "KOMBAT HOME FIORENTINA 2026",
+                category: "football",
+                gender: "men",
+                price: 95.00,
+                originalPrice: 120.00,
+                isSale: true,
+                badge: "-20% SALE",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=600&auto=format&fit=crop",
+                description: "ACF Fiorentina Home Active Jersey in signature Violet Tillandsia colorway with lightweight moisture-wicking technology.",
+                colors: ["#6B21A8", "#FFFFFF"]
+            },
+            {
+                id: 5,
+                name: "222 BANDA ORSONS FLEECE HOODIE",
+                category: "222banda",
+                gender: "men",
+                price: 99.00,
+                originalPrice: 99.00,
+                isNew: true,
+                badge: "NEW DROP",
+                rating: 4.7,
+                image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1509967419530-da38b4704bc6?q=80&w=600&auto=format&fit=crop",
+                description: "Heavyweight comfort fit cotton hoodie with kangaroo pocket, drawstring hood and jacquard Omini tape down the sleeves.",
+                colors: ["#000000", "#9CA3AF"]
+            },
+            {
+                id: 6,
+                name: "AUTHENTIC CROP FLEECE WOMAN",
+                category: "women",
+                gender: "women",
+                price: 75.00,
+                originalPrice: 90.00,
+                isSale: true,
+                badge: "WOMEN",
+                rating: 4.8,
+                image: "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=600&auto=format&fit=crop",
+                description: "Relaxed crop sweatshirt in soft cotton fleece with ribbed cuffs and Omini logo tape detailing.",
+                colors: ["#E2001A", "#FFFFFF", "#000000"]
+            },
+            {
+                id: 7,
+                name: "KAPPA LA MORA SNEAKERS UNISEX",
+                category: "men",
+                gender: "men",
+                price: 110.00,
+                originalPrice: 110.00,
+                isNew: true,
+                badge: "FOOTWEAR",
+                rating: 4.6,
+                image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1608231387042-66d1773070a5?q=80&w=600&auto=format&fit=crop",
+                description: "Low-cut casual retro sneakers featuring premium suede trim, cushioned EVA midsole and iconic Omini side logo.",
+                colors: ["#FFFFFF", "#000000"]
+            },
+            {
+                id: 8,
+                name: "RED STAR FC 2026 AWAY JERSEY",
+                category: "football",
+                gender: "men",
+                price: 85.00,
+                originalPrice: 85.00,
+                isNew: false,
+                badge: "LIMITED",
+                rating: 4.9,
+                image: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=600&auto=format&fit=crop",
+                hoverImage: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=600&auto=format&fit=crop",
+                description: "Official Away kit for Paris' iconic Red Star FC. Crafted in 100% recycled breathable performance fabric.",
+                colors: ["#000000", "#E2001A"]
+            }
+        ];
+
+        // State Variables
+        let cart = [];
+        let wishlist = [];
+        let currentFilter = 'all';
+        let discountPercent = 0;
+
+        // DOM Loaded Initializer
+        window.onload = function () {
+            renderProducts(products);
+            setupEventListeners();
+            updateCartUI();
+            updateWishlistUI();
+        };
+
+        function setupEventListeners() {
+            // Mobile Menu
+            document.getElementById('mobile-menu-btn').addEventListener('click', openMobileMenu);
+            document.getElementById('close-mobile-menu').addEventListener('click', closeMobileMenu);
+
+            // Search Modal
+            document.getElementById('open-search-btn').addEventListener('click', openSearchModal);
+            document.getElementById('close-search-btn').addEventListener('click', closeSearchModal);
+            document.getElementById('search-input').addEventListener('keyup', handleSearch);
+
+            // Cart Drawer
+            document.getElementById('open-cart-btn').addEventListener('click', openCartDrawer);
+            document.getElementById('close-cart-btn').addEventListener('click', closeCartDrawer);
+
+            // Wishlist Drawer
+            document.getElementById('open-wishlist-btn').addEventListener('click', openWishlistDrawer);
+            document.getElementById('close-wishlist-btn').addEventListener('click', closeWishlistDrawer);
+        }
+
+        // Render Product Cards Grid
+        function renderProducts(items) {
+            const grid = document.getElementById('product-grid');
+            if (items.length === 0) {
+                grid.innerHTML = `
+                    <div class="col-span-full py-16 text-center text-neutral-400">
+                        <i class="fa-solid fa-box-open text-5xl mb-3 text-neutral-300"></i>
+                        <p class="font-display text-xl uppercase font-bold text-neutral-600">No products found in this category.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = items.map(product => {
+                const isWishlisted = wishlist.some(id => id === product.id);
+                return `
+                    <div class="product-card group bg-white rounded-2xl overflow-hidden border border-neutral-200 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between relative">
+                        <!-- Card Top / Image Gallery -->
+                        <div class="relative bg-neutral-100 aspect-square overflow-hidden cursor-pointer" onclick="openQuickView(${product.id})">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <img src="${product.hoverImage}" alt="${product.name} Hover" class="product-img-secondary absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500">
+                            
+                            <!-- Badges -->
+                            <div class="absolute top-3 left-3 flex flex-col gap-1 z-10">
+                                ${product.badge ? `<span class="bg-kappaBlack text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md shadow">${product.badge}</span>` : ''}
+                                ${product.isSale ? `<span class="bg-kappaRed text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-md shadow">SALE</span>` : ''}
+                            </div>
+
+                            <!-- Wishlist Toggle Button -->
+                            <button onclick="event.stopPropagation(); toggleWishlist(${product.id});" class="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-white/90 hover:bg-white text-kappaBlack hover:text-kappaRed flex items-center justify-center shadow transition-all transform hover:scale-110">
+                                <i class="${isWishlisted ? 'fa-solid fa-heart text-kappaRed' : 'fa-regular fa-heart'}"></i>
+                            </button>
+
+                            <!-- Quick Add Bar Hover Overlay -->
+                            <div class="absolute bottom-3 left-3 right-3 z-10 opacity-0 transform translate-y-3 quick-add-btn transition-all duration-300">
+                                <button onclick="event.stopPropagation(); addToCart(${product.id});" class="w-full bg-kappaBlack hover:bg-kappaRed text-white font-display text-xs tracking-wider uppercase font-bold py-3 rounded-xl shadow-lg transition-colors flex items-center justify-center gap-2">
+                                    <i class="fa-solid fa-plus text-xs"></i> QUICK ADD
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Card Info Details -->
+                        <div class="p-5 flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex items-center justify-between text-xs text-neutral-400 font-semibold mb-1">
+                                    <span class="uppercase tracking-wider">${product.category}</span>
+                                    <span class="text-amber-500 font-bold"><i class="fa-solid fa-star text-[10px]"></i> ${product.rating}</span>
+                                </div>
+                                <h3 onclick="openQuickView(${product.id})" class="font-display font-bold text-base text-kappaBlack uppercase line-clamp-1 hover:text-kappaRed transition-colors cursor-pointer">
+                                    ${product.name}
+                                </h3>
+                            </div>
+
+                            <div class="flex items-center justify-between mt-4 pt-3 border-t border-neutral-100">
+                                <div class="flex items-baseline gap-2">
+                                    <span class="font-display text-xl font-bold text-kappaBlack">$${product.price.toFixed(2)}</span>
+                                    ${product.originalPrice > product.price ? `<span class="text-xs text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                                </div>
+                                <button onclick="openQuickView(${product.id})" class="text-xs font-bold uppercase text-kappaRed hover:underline">
+                                    DETAILS
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter Products
+        function filterProducts(category) {
+            currentFilter = category;
+            
+            // Update Tab UI States
+            document.querySelectorAll('.filter-tab-btn').forEach(btn => {
+                btn.classList.remove('bg-kappaBlack', 'text-white');
+                btn.classList.add('bg-neutral-100', 'text-neutral-700');
+            });
+
+            const activeBtn = document.getElementById(`filter-${category}`);
+            if (activeBtn) {
+                activeBtn.classList.remove('bg-neutral-100', 'text-neutral-700');
+                activeBtn.classList.add('bg-kappaBlack', 'text-white');
+            }
+
+            if (category === 'all') {
+                renderProducts(products);
+            } else if (category === 'sale') {
+                renderProducts(products.filter(p => p.isSale || p.originalPrice > p.price));
+            } else {
+                renderProducts(products.filter(p => p.category === category || p.gender === category));
+            }
+        }
+
+        // Sort Products
+        function sortProducts(criteria) {
+            let sorted = [...products];
+            if (criteria === 'price-low') {
+                sorted.sort((a, b) => a.price - b.price);
+            } else if (criteria === 'price-high') {
+                sorted.sort((a, b) => b.price - a.price);
+            } else if (criteria === 'rating') {
+                sorted.sort((a, b) => b.rating - a.rating);
+            }
+            renderProducts(sorted);
+        }
+
+        function addToCart(productId, selectedSize = 'M') {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingIndex = cart.findIndex(item => item.id === productId && item.size === selectedSize);
+            if (existingIndex > -1) {
+                cart[existingIndex].quantity += 1;
+            } else {
+                cart.push({ ...product, size: selectedSize, quantity: 1 });
+            }
+
+            updateCartUI();
+            openCartDrawer();
+            showToast(`Added ${product.name} (${selectedSize}) to bag.`);
+        }
+
+        function updateCartQuantity(id, size, change) {
+            const index = cart.findIndex(item => item.id === id && item.size === size);
+            if (index > -1) {
+                cart[index].quantity += change;
+                if (cart[index].quantity <= 0) {
+                    cart.splice(index, 1);
+                }
+            }
+            updateCartUI();
+        }
+
+        function removeFromCart(id, size) {
+            cart = cart.filter(item => !(item.id === id && item.size === size));
+            updateCartUI();
+            showToast("Item removed from bag.");
+        }
+
+        function updateCartUI() {
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const cartBadge = document.getElementById('cart-badge');
+            const cartCountBadge = document.getElementById('cart-count-badge');
+            
+            cartBadge.innerText = totalCount;
+            cartCountBadge.innerText = `${totalCount} item${totalCount !== 1 ? 's' : ''}`;
+
+            const container = document.getElementById('cart-items-container');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center text-neutral-400 my-auto">
+                        <i class="fa-solid fa-bag-shopping text-5xl text-neutral-300 mb-3"></i>
+                        <p class="font-display text-xl uppercase font-bold text-neutral-700">YOUR BAG IS EMPTY</p>
+                        <p class="text-xs text-neutral-400 mt-1 mb-4">Discover iconic 222 Banda taped tracksuits.</p>
+                        <button onclick="closeCartDrawer();" class="bg-kappaRed text-white text-xs font-bold uppercase px-6 py-3 rounded-lg hover:bg-kappaDarkRed transition-colors">
+                            SHOP COLLECTION
+                        </button>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = cart.map(item => `
+                    <div class="flex gap-4 pt-4 first:pt-0">
+                        <img src="${item.image}" alt="${item.name}" class="w-20 h-20 object-cover rounded-xl bg-neutral-100 border border-neutral-200">
+                        <div class="flex-1 flex flex-col justify-between">
+                            <div>
+                                <div class="flex justify-between items-start">
+                                    <h4 class="font-display font-bold text-sm uppercase text-kappaBlack line-clamp-1">${item.name}</h4>
+                                    <button onclick="removeFromCart(${item.id}, '${item.size}')" class="text-neutral-400 hover:text-kappaRed text-xs ml-2">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </div>
+                                <p class="text-xs text-neutral-500 font-semibold">Size: <span class="text-kappaBlack font-bold">${item.size}</span></p>
+                            </div>
+                            <div class="flex items-center justify-between mt-2">
+                                <div class="flex items-center border border-neutral-300 rounded-lg overflow-hidden bg-white">
+                                    <button onclick="updateCartQuantity(${item.id}, '${item.size}', -1)" class="px-2 py-1 text-xs hover:bg-neutral-100 text-neutral-600">-</button>
+                                    <span class="px-3 py-1 text-xs font-bold text-kappaBlack">${item.quantity}</span>
+                                    <button onclick="updateCartQuantity(${item.id}, '${item.size}', 1)" class="px-2 py-1 text-xs hover:bg-neutral-100 text-neutral-600">+</button>
+                                </div>
+                                <span class="font-display font-bold text-base text-kappaBlack">$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Subtotal Calculation
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const discount = subtotal * (discountPercent / 100);
+            const finalTotal = subtotal - discount;
+
+            document.getElementById('cart-subtotal').innerText = `$${finalTotal.toFixed(2)}`;
+
+            if (discountPercent > 0) {
+                document.getElementById('discount-row').classList.remove('hidden');
+                document.getElementById('discount-amount').innerText = `-$${discount.toFixed(2)}`;
+            } else {
+                document.getElementById('discount-row').classList.add('hidden');
+            }
+
+            // Free Shipping Progress Calculation ($150 Target)
+            const target = 150.00;
+            const progress = Math.min((finalTotal / target) * 100, 100);
+            const progressBar = document.getElementById('shipping-progress-bar');
+            const progressText = document.getElementById('shipping-progress-text');
+            const remainingText = document.getElementById('shipping-remaining-text');
+
+            progressBar.style.width = `${progress}%`;
+            if (finalTotal >= target) {
+                progressText.innerText = "QUALIFIED FOR FREE EXPRESS SHIPPING!";
+                remainingText.innerText = "$0.00 left";
+            } else {
+                progressText.innerText = "Free Express Shipping Progress";
+                remainingText.innerText = `$${(target - finalTotal).toFixed(2)} left`;
+            }
+        }
+
+        function applyPromoCode() {
+            const input = document.getElementById('promo-code-input').value.trim().toUpperCase();
+            if (input === "KAPPA20") {
+                discountPercent = 20;
+                updateCartUI();
+                showToast("Promo Code KAPPA20 Applied! 20% Discount unlocked.");
+            } else {
+                showToast("Invalid Promo Code. Try 'KAPPA20'");
+            }
+        }
+
+        // Wishlist Toggle
+        function toggleWishlist(productId) {
+            const index = wishlist.indexOf(productId);
+            if (index > -1) {
+                wishlist.splice(index, 1);
+                showToast("Removed from saved items.");
+            } else {
+                wishlist.push(productId);
+                showToast("Saved to your Wishlist!");
+            }
+            updateWishlistUI();
+            renderProducts(products);
+        }
+
+        function updateWishlistUI() {
+            const badge = document.getElementById('wishlist-badge');
+            if (wishlist.length > 0) {
+                badge.innerText = wishlist.length;
+                badge.classList.remove('hidden');
+            } else {
+                badge.classList.add('hidden');
+            }
+
+            const container = document.getElementById('wishlist-items-container');
+            if (wishlist.length === 0) {
+                container.innerHTML = `
+                    <div class="py-12 text-center text-neutral-400 my-auto">
+                        <i class="fa-regular fa-heart text-5xl text-neutral-300 mb-3"></i>
+                        <p class="font-display text-xl uppercase font-bold text-neutral-700">NO SAVED ITEMS</p>
+                        <p class="text-xs text-neutral-400 mt-1">Tap the heart on any product to save it for later.</p>
+                    </div>
+                `;
+            } else {
+                const wishlistProducts = products.filter(p => wishlist.includes(p.id));
+                container.innerHTML = wishlistProducts.map(item => `
+                    <div class="flex gap-4 p-3 bg-neutral-50 rounded-2xl border border-neutral-200 items-center justify-between">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-cover rounded-xl bg-white">
+                        <div class="flex-1">
+                            <h4 class="font-display font-bold text-xs uppercase text-kappaBlack line-clamp-1">${item.name}</h4>
+                            <p class="font-display font-bold text-sm text-kappaRed mt-0.5">$${item.price.toFixed(2)}</p>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <button onclick="addToCart(${item.id}); toggleWishlist(${item.id});" class="bg-kappaBlack text-white p-2 rounded-lg text-xs hover:bg-kappaRed transition-colors" title="Move to Cart">
+                                <i class="fa-solid fa-bag-shopping"></i>
+                            </button>
+                            <button onclick="toggleWishlist(${item.id})" class="text-neutral-400 hover:text-kappaRed text-xs p-1">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function openQuickView(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const modal = document.getElementById('quickview-modal');
+            const content = document.getElementById('quickview-content');
+            const body = document.getElementById('quickview-body');
+
+            body.innerHTML = `
+                <div class="bg-neutral-100 p-8 flex items-center justify-center relative">
+                    <img id="qv-main-img" src="${product.image}" alt="${product.name}" class="w-full h-80 object-contain rounded-2xl">
+                    <div class="absolute bottom-4 left-4 flex gap-2">
+                        <button onclick="document.getElementById('qv-main-img').src='${product.image}'" class="w-10 h-10 border-2 border-kappaRed rounded-lg overflow-hidden bg-white">
+                            <img src="${product.image}" class="w-full h-full object-cover">
+                        </button>
+                        <button onclick="document.getElementById('qv-main-img').src='${product.hoverImage}'" class="w-10 h-10 border border-neutral-300 rounded-lg overflow-hidden bg-white">
+                            <img src="${product.hoverImage}" class="w-full h-full object-cover">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="p-8 flex flex-col justify-between">
+                    <div>
+                        <span class="text-xs font-bold text-kappaRed uppercase tracking-wider">${product.category}</span>
+                        <h2 class="font-display text-3xl font-bold uppercase text-kappaBlack mt-1 line-clamp-2">${product.name}</h2>
+                        
+                        <div class="flex items-center gap-3 my-3">
+                            <span class="font-display text-2xl font-bold text-kappaBlack">$${product.price.toFixed(2)}</span>
+                            ${product.originalPrice > product.price ? `<span class="text-sm text-neutral-400 line-through">$${product.originalPrice.toFixed(2)}</span>` : ''}
+                            <span class="text-xs bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded">In Stock</span>
+                        </div>
+
+                        <p class="text-xs text-neutral-600 leading-relaxed mb-6">${product.description}</p>
+
+                        <!-- Size Selector -->
+                        <div class="mb-6">
+                            <div class="flex justify-between items-center mb-2">
+                                <span class="text-xs font-bold uppercase text-neutral-700">Select Size:</span>
+                                <a href="#" onclick="showToast('Size chart: Standard EU/US sizing.');" class="text-[11px] text-kappaRed font-bold hover:underline">Size Guide</a>
+                            </div>
+                            <div class="grid grid-cols-4 gap-2" id="qv-size-selector">
+                                <button onclick="selectQVSize(this, 'S')" class="qv-size-btn border border-neutral-300 rounded-lg py-2 text-xs font-bold hover:border-kappaBlack transition-colors">S</button>
+                                <button onclick="selectQVSize(this, 'M')" class="qv-size-btn border-2 border-kappaBlack bg-kappaBlack text-white rounded-lg py-2 text-xs font-bold transition-colors">M</button>
+                                <button onclick="selectQVSize(this, 'L')" class="qv-size-btn border border-neutral-300 rounded-lg py-2 text-xs font-bold hover:border-kappaBlack transition-colors">L</button>
+                                <button onclick="selectQVSize(this, 'XL')" class="qv-size-btn border border-neutral-300 rounded-lg py-2 text-xs font-bold hover:border-kappaBlack transition-colors">XL</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-4 border-t border-neutral-200">
+                        <button id="qv-add-btn" onclick="addToCart(${product.id}, selectedQVSize); closeQuickView();" class="w-full bg-kappaRed hover:bg-kappaDarkRed text-white font-display text-lg tracking-wider font-bold uppercase py-3.5 rounded-xl transition-all shadow-lg hover:shadow-red-600/30">
+                            ADD TO SHOPPING BAG
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            window.selectedQVSize = 'M';
+
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function selectQVSize(btn, size) {
+            window.selectedQVSize = size;
+            document.querySelectorAll('.qv-size-btn').forEach(b => {
+                b.className = "qv-size-btn border border-neutral-300 rounded-lg py-2 text-xs font-bold hover:border-kappaBlack transition-colors";
+            });
+            btn.className = "qv-size-btn border-2 border-kappaBlack bg-kappaBlack text-white rounded-lg py-2 text-xs font-bold transition-colors";
+        }
+
+        function closeQuickView() {
+            const modal = document.getElementById('quickview-modal');
+            const content = document.getElementById('quickview-content');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function openSearchModal() {
+            const modal = document.getElementById('search-modal');
+            const content = document.getElementById('search-modal-content');
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('-translate-y-10');
+            document.getElementById('search-input').focus();
+        }
+
+        function closeSearchModal() {
+            const modal = document.getElementById('search-modal');
+            const content = document.getElementById('search-modal-content');
+            content.classList.add('-translate-y-10');
+            modal.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function handleSearch(e) {
+            const query = e.target.value.toLowerCase().trim();
+            const resultsContainer = document.getElementById('search-results');
+
+            if (!query) {
+                resultsContainer.innerHTML = '';
+                return;
+            }
+
+            const matched = products.filter(p => p.name.toLowerCase().includes(query) || p.category.toLowerCase().includes(query));
+            
+            if (matched.length === 0) {
+                resultsContainer.innerHTML = `<div class="p-4 text-xs font-bold text-neutral-400">No matching items found for "${query}"</div>`;
+                return;
+            }
+
+            resultsContainer.innerHTML = matched.map(item => `
+                <div onclick="openQuickView(${item.id}); closeSearchModal();" class="flex items-center gap-4 p-2 hover:bg-neutral-50 rounded-xl cursor-pointer transition-colors">
+                    <img src="${item.image}" class="w-12 h-12 object-cover rounded-lg bg-neutral-100">
+                    <div class="flex-1">
+                        <h4 class="font-display font-bold text-xs uppercase text-kappaBlack line-clamp-1">${item.name}</h4>
+                        <span class="text-xs font-bold text-kappaRed">$${item.price.toFixed(2)}</span>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-xs text-neutral-400"></i>
+                </div>
+            `).join('');
+        }
+
+        function quickSearch(keyword) {
+            document.getElementById('search-input').value = keyword;
+            handleSearch({ target: { value: keyword } });
+        }
+
+        // Drawer Controls
+        function openCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const content = document.getElementById('cart-drawer-content');
+            drawer.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('translate-x-full');
+        }
+
+        function closeCartDrawer() {
+            const drawer = document.getElementById('cart-drawer');
+            const content = document.getElementById('cart-drawer-content');
+            content.classList.add('translate-x-full');
+            drawer.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function openWishlistDrawer() {
+            const drawer = document.getElementById('wishlist-drawer');
+            const content = document.getElementById('wishlist-drawer-content');
+            drawer.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('translate-x-full');
+        }
+
+        function closeWishlistDrawer() {
+            const drawer = document.getElementById('wishlist-drawer');
+            const content = document.getElementById('wishlist-drawer-content');
+            content.classList.add('translate-x-full');
+            drawer.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        function openMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const content = document.getElementById('mobile-menu-content');
+            menu.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('-translate-x-full');
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            const content = document.getElementById('mobile-menu-content');
+            content.classList.add('-translate-x-full');
+            menu.classList.add('opacity-0', 'pointer-events-none');
+        }
+
+        // Checkout Simulation
+        function simulateCheckout() {
+            if (cart.length === 0) {
+                showToast("Your cart is empty!");
+                return;
+            }
+            showToast("Order Placed! Thank you for shopping with Kappa.");
+            cart = [];
+            updateCartUI();
+            closeCartDrawer();
+        }
+
+        // Newsletter Subscription
+        function subscribeNewsletter(e) {
+            e.preventDefault();
+            showToast("Welcome to Kappa Club! Check your inbox for your -15% coupon.");
+            e.target.reset();
+        }
+
+        function showToast(message) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "bg-kappaBlack text-white border-l-4 border-kappaRed shadow-2xl px-4 py-3 rounded-r-xl text-xs font-semibold uppercase tracking-wider flex items-center gap-3 pointer-events-auto transition-all transform translate-y-2 opacity-0";
+            toast.innerHTML = `
+                <i class="fa-solid fa-circle-check text-kappaRed text-sm"></i>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('opacity-0', 'translate-y-2');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
